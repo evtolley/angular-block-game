@@ -1,4 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { from, fromEvent, BehaviorSubject } from 'rxjs';
+import { takeWhile, map } from 'rxjs/operators';
+import { GameBoardService } from './game-board.service';
 
 @Component({
   selector: 'game-board',
@@ -6,5 +9,31 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./game-board.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameBoardComponent {
+export class GameBoardComponent implements OnInit, OnDestroy {
+  constructor(private el: ElementRef, private gameBoardService: GameBoardService){}
+
+  componentIsActive = true
+  windowOffset$ = new BehaviorSubject<number>(0);
+
+  ngOnInit() {
+    fromEvent(window, 'resize')
+    .pipe(
+      takeWhile(() => this.componentIsActive),
+      map(event => { 
+        this.calculateWindowOffset();
+      })
+    )
+    .subscribe();
+
+    this.calculateWindowOffset();
+  }
+
+  calculateWindowOffset() {
+      const rect = this.el.nativeElement.getBoundingClientRect();
+      this.windowOffset$.next(this.gameBoardService.calculateWindowOffset(rect.left)) 
+  }
+
+  ngOnDestroy(){
+    this.componentIsActive = false;
+  }
 }
