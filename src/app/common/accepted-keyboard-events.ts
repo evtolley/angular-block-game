@@ -1,3 +1,4 @@
 export enum AcceptedKeyBoardEvents {
-    MouseMove = 'MouseMove'
+    MouseMove = 'MouseMove',
+    SpaceBar = "Enter"
 }

@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
+import { GameConstants } from '../common/game-constants';
 
 @Injectable()
 export class PlayerService {
-    calculatePlayerPosition(leftMargin: number, windowMousePosition: number) : string {
-        return windowMousePosition - leftMargin + 'px';
+    calculatePlayerCurrentLeftMargin(leftMargin: number, windowMousePosition: number) : number{
+        return windowMousePosition - leftMargin - (GameConstants.PLAYER_WIDTH / 2)
+    };
+    
+    calculatePlayerMaxLeftMargin(windowOffset: number): number {
+        return GameConstants.GAMEBOARD_WIDTH - (GameConstants.PLAYER_WIDTH /2) + windowOffset;
+    }
+
+    calculatePlayerMinLeftMargin(windowOffset: number) : number {
+        return (GameConstants.PLAYER_WIDTH /2) + windowOffset; 
     }
 }
