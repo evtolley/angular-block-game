@@ -33,6 +33,11 @@ export class GameBoardComponent implements OnInit, OnDestroy {
       this.windowOffset$.next(this.gameBoardService.calculateWindowOffset(rect.left)) 
   }
 
+  respondToPlayerShot(playerXPosition: number) {
+    //TO DO: Respond to this
+    console.log(playerXPosition);
+  }
+
   ngOnDestroy(){
     this.componentIsActive = false;
   }
