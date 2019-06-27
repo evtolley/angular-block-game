@@ -10,16 +10,16 @@ import { GameBoardService } from './game-board.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameBoardComponent implements OnInit, OnDestroy {
-  constructor(private el: ElementRef, private gameBoardService: GameBoardService){}
+  constructor(private el: ElementRef, private gameBoardService: GameBoardService) {}
 
-  componentIsActive = true
+  componentIsActive = true;
   windowOffset$ = new BehaviorSubject<number>(0);
 
   ngOnInit() {
     fromEvent(window, 'resize')
     .pipe(
       takeWhile(() => this.componentIsActive),
-      map(event => { 
+      map(event => {
         this.calculateWindowOffset();
       })
     )
@@ -30,15 +30,15 @@ export class GameBoardComponent implements OnInit, OnDestroy {
 
   calculateWindowOffset() {
       const rect = this.el.nativeElement.getBoundingClientRect();
-      this.windowOffset$.next(this.gameBoardService.calculateWindowOffset(rect.left)) 
+      this.windowOffset$.next(this.gameBoardService.calculateWindowOffset(rect.left));
   }
 
   respondToPlayerShot(playerXPosition: number) {
-    //TO DO: Respond to this
+    // TO DO: Respond to this
     console.log(playerXPosition);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.componentIsActive = false;
   }
 }
