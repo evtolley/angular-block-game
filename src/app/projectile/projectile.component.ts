@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, ElementRef, Output, EventEmitter } from '@angular/core';
-import { fromEvent, BehaviorSubject } from 'rxjs';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, timer } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
-import { AcceptedKeyBoardEvents } from '../common/accepted-keyboard-events';
+import { GameConstants } from '../common/game-constants';
 
 @Component({
   selector: 'projectile',
@@ -12,16 +12,18 @@ import { AcceptedKeyBoardEvents } from '../common/accepted-keyboard-events';
 export class ProjectileComponent implements OnInit, OnDestroy {
 
   componentIsActive = true;
-  private leftMargin$ = new BehaviorSubject<string>('0px');
+  private leftMargin = '0px';
+  private marginTop = GameConstants.GAMEBOARD_HEIGHT - GameConstants.PLAYER_HEIGHT;
 
-  currentXPosition: number;
+  marginTop$ = new BehaviorSubject<string>(`${this.marginTop}px`);
 
   ngOnInit() {
-      fromEvent(document, 'keydown').pipe(
-        takeWhile(() => this.componentIsActive),
-        map((event: KeyboardEvent) => {
-
-        })
+      timer(0, 1).pipe(
+          takeWhile(() => this.componentIsActive),
+          map(() => {
+              this.marginTop -= 7;
+              this.marginTop$.next(`${this.marginTop}px`);
+          })
       ).subscribe();
   }
 

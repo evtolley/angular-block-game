@@ -6,19 +6,21 @@ import { GameBoardComponent } from './game-board/game-board.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
 import { GameBoardService } from './game-board/game-board.service';
+import { ProjectileComponent } from './projectile/projectile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
-    PlayerComponent
+    PlayerComponent,
+    ProjectileComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [
     PlayerService,
-    GameBoardService
+    GameBoardService,
   ],
   bootstrap: [AppComponent]
 })
