@@ -21,7 +21,7 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   windowOffset$ = new BehaviorSubject<number>(0);
 
   // they player's container is the gameboard, so we can get it this way
-  @ViewChild('player', { read: ViewContainerRef, static: true }) viewContainer : ViewContainerRef;
+  @ViewChild('player', { read: ViewContainerRef, static: true }) viewContainer: ViewContainerRef;
 
   private projectileFactory: ComponentFactory<ProjectileComponent>;
 
