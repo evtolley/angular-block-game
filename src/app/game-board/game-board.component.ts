@@ -1,7 +1,9 @@
-import { Component, ChangeDetectionStrategy, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { from, fromEvent, BehaviorSubject } from 'rxjs';
+import { Component, ChangeDetectionStrategy, ElementRef,
+  OnInit, OnDestroy, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ViewChild, ComponentRef } from '@angular/core';
+import { fromEvent, BehaviorSubject } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
 import { GameBoardService } from './game-board.service';
+import { ProjectileComponent } from '../projectile/projectile.component';
 
 @Component({
   selector: 'game-board',
@@ -10,10 +12,18 @@ import { GameBoardService } from './game-board.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameBoardComponent implements OnInit, OnDestroy {
-  constructor(private el: ElementRef, private gameBoardService: GameBoardService) {}
+
+  constructor(private el: ElementRef,
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private gameBoardService: GameBoardService) {}
 
   componentIsActive = true;
   windowOffset$ = new BehaviorSubject<number>(0);
+
+  // they player's container is the gameboard, so we can get it this way
+  @ViewChild('player', { read: ViewContainerRef, static: true }) viewContainer : ViewContainerRef;
+
+  private projectileFactory: ComponentFactory<ProjectileComponent>;
 
   ngOnInit() {
     fromEvent(window, 'resize')
@@ -26,6 +36,9 @@ export class GameBoardComponent implements OnInit, OnDestroy {
     .subscribe();
 
     this.calculateWindowOffset();
+
+    // set up the component factories
+    this.projectileFactory = this.componentFactoryResolver.resolveComponentFactory(ProjectileComponent);
   }
 
   calculateWindowOffset() {
@@ -34,8 +47,14 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   }
 
   respondToPlayerShot(playerXPosition: number) {
-    // TO DO: Respond to this
-    console.log(playerXPosition);
+    const projectile: ComponentRef<ProjectileComponent> = this.viewContainer.createComponent(this.projectileFactory);
+    projectile.instance.marginLeft$.next(`${playerXPosition}px`);
+
+    // we listen for the missed targets event - if the player misses, we unsubscribe and destroy
+    projectile.instance.missedTargets.subscribe(res => {
+      projectile.instance.missedTargets.unsubscribe();
+      projectile.destroy();
+    });
   }
 
   ngOnDestroy() {

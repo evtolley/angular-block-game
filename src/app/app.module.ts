@@ -15,6 +15,9 @@ import { ProjectileComponent } from './projectile/projectile.component';
     PlayerComponent,
     ProjectileComponent
   ],
+  entryComponents: [
+    ProjectileComponent
+  ],
   imports: [
     BrowserModule
   ],

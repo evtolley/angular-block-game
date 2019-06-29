@@ -14,4 +14,8 @@ export class PlayerService {
     calculatePlayerMinLeftMargin(windowOffset: number): number {
         return (GameConstants.PLAYER_WIDTH / 2) + windowOffset;
     }
+
+    calculateShooterXPosition(windowOffset: number, windowMousePosition: number) {
+        return windowMousePosition - windowOffset - (GameConstants.PROJECTILE_DIMENSIONS / 2);
+    }
 }

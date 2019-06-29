@@ -3,6 +3,7 @@ import { fromEvent, BehaviorSubject } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
 import { PlayerService } from './player.service';
 import { AcceptedKeyBoardEvents } from '../common/accepted-keyboard-events';
+import { GameConstants } from '../common/game-constants';
 
 @Component({
   selector: 'player',
@@ -31,7 +32,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         map((event: MouseEvent) => {
           if (event.x >= this.playerService.calculatePlayerMinLeftMargin(this.windowOffset)
             && event.x <= this.playerService.calculatePlayerMaxLeftMargin(this.windowOffset))  {
-            this.currentXPosition = event.x;
+            this.currentXPosition = this.playerService.calculateShooterXPosition(this.windowOffset, event.x);
             this.leftMargin$.next(`${this.playerService.calculatePlayerCurrentLeftMargin(this.windowOffset, event.x)}px`);
           }
         })
