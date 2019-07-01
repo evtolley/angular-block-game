@@ -7,16 +7,18 @@ import { PlayerComponent } from './player/player.component';
 import { PlayerService } from './player/player.service';
 import { GameBoardService } from './game-board/game-board.service';
 import { ProjectileComponent } from './projectile/projectile.component';
+import { TargetComponent } from './target/target.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
     PlayerComponent,
-    ProjectileComponent
+    ProjectileComponent,
+    TargetComponent
   ],
   entryComponents: [
-    ProjectileComponent
+    ProjectileComponent,
   ],
   imports: [
     BrowserModule

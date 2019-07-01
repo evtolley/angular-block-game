@@ -6,8 +6,4 @@ export class GameBoardService {
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         return scrollLeft + xPosition;
     }
-
-  destroyChildElement(component: ComponentRef<any>) {
-    component.destroy();
-  }
 }

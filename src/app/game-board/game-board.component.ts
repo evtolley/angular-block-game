@@ -26,6 +26,7 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   private projectileFactory: ComponentFactory<ProjectileComponent>;
 
   ngOnInit() {
+    //if the window is resized, we recalculate the window offset
     fromEvent(window, 'resize')
     .pipe(
       takeWhile(() => this.componentIsActive),
