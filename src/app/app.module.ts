@@ -19,6 +19,7 @@ import { TargetComponent } from './target/target.component';
   ],
   entryComponents: [
     ProjectileComponent,
+    TargetComponent
   ],
   imports: [
     BrowserModule

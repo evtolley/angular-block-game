@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, ElementRef,
   OnInit, OnDestroy, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ViewChild, ComponentRef } from '@angular/core';
-import { fromEvent, BehaviorSubject } from 'rxjs';
+import { fromEvent, BehaviorSubject, timer } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
 import { GameBoardService } from './game-board.service';
 import { ProjectileComponent } from '../projectile/projectile.component';
+import { TargetComponent } from '../target/target.component';
 
 @Component({
   selector: 'game-board',
@@ -24,8 +25,13 @@ export class GameBoardComponent implements OnInit, OnDestroy {
   @ViewChild('player', { read: ViewContainerRef, static: true }) viewContainer: ViewContainerRef;
 
   private projectileFactory: ComponentFactory<ProjectileComponent>;
+  private targetFactory: ComponentFactory<TargetComponent>;
 
   ngOnInit() {
+    // set up the component factories
+    this.projectileFactory = this.componentFactoryResolver.resolveComponentFactory(ProjectileComponent);
+    this.targetFactory = this.componentFactoryResolver.resolveComponentFactory(TargetComponent);
+    
     //if the window is resized, we recalculate the window offset
     fromEvent(window, 'resize')
     .pipe(
@@ -38,8 +44,12 @@ export class GameBoardComponent implements OnInit, OnDestroy {
 
     this.calculateWindowOffset();
 
-    // set up the component factories
-    this.projectileFactory = this.componentFactoryResolver.resolveComponentFactory(ProjectileComponent);
+    timer(0, 5000).pipe(
+      takeWhile(() => this.componentIsActive),
+      map(() => {
+        this.viewContainer.createComponent(this.targetFactory);
+      })
+    ).subscribe();
   }
 
   calculateWindowOffset() {

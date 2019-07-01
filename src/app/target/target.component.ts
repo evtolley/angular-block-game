@@ -20,6 +20,7 @@ import { takeWhile, map } from 'rxjs/operators';
         this.speed = 14;
 
         timer(0, this.speed).pipe(
+            // TO DO: Make it change direction when it hits the sides
             takeWhile(() => this.componentIsActive),
             map(() => {
                 this.leftMargin++;
