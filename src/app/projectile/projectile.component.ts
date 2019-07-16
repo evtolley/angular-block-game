@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject, timer } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
-import { GameConstants } from '../common/game-constants';
+import { GameConstants } from '../common/game-constants.enum';
 
 @Component({
   selector: 'projectile',

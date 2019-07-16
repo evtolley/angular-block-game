@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameConstants } from '../common/game-constants';
+import { GameConstants } from '../common/game-constants.enum';
 
 @Injectable()
 export class PlayerService {

@@ -31,8 +31,8 @@ export class GameBoardComponent implements OnInit, OnDestroy {
     // set up the component factories
     this.projectileFactory = this.componentFactoryResolver.resolveComponentFactory(ProjectileComponent);
     this.targetFactory = this.componentFactoryResolver.resolveComponentFactory(TargetComponent);
-    
-    //if the window is resized, we recalculate the window offset
+
+    // if the window is resized, we recalculate the window offset
     fromEvent(window, 'resize')
     .pipe(
       takeWhile(() => this.componentIsActive),
@@ -44,12 +44,7 @@ export class GameBoardComponent implements OnInit, OnDestroy {
 
     this.calculateWindowOffset();
 
-    timer(0, 5000).pipe(
-      takeWhile(() => this.componentIsActive),
-      map(() => {
-        this.viewContainer.createComponent(this.targetFactory);
-      })
-    ).subscribe();
+    this.viewContainer.createComponent(this.targetFactory);
   }
 
   calculateWindowOffset() {

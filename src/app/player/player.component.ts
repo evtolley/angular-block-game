@@ -2,8 +2,7 @@ import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, ElementRe
 import { fromEvent, BehaviorSubject } from 'rxjs';
 import { takeWhile, map } from 'rxjs/operators';
 import { PlayerService } from './player.service';
-import { AcceptedKeyBoardEvents } from '../common/accepted-keyboard-events';
-import { GameConstants } from '../common/game-constants';
+import { AcceptedKeyBoardEvents } from '../common/accepted-keyboard-events.enum';
 
 @Component({
   selector: 'player',

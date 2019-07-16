@@ -8,6 +8,7 @@ import { PlayerService } from './player/player.service';
 import { GameBoardService } from './game-board/game-board.service';
 import { ProjectileComponent } from './projectile/projectile.component';
 import { TargetComponent } from './target/target.component';
+import { TargetService } from './target/target.service';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TargetComponent } from './target/target.component';
   providers: [
     PlayerService,
     GameBoardService,
+    TargetService
   ],
   bootstrap: [AppComponent]
 })
